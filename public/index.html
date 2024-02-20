@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>npf page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+</head>
+
+<body>
+
+    <section class="flex w-full">
+        <div class="flex w-full h-screen max-w-7xl mx-auto px-5 py-10">
+
+            <div class="flex flex-col h-fit w-full mx-auto gap-5">
+                <div class="flex w-full">
+                    <h2 class="flex text-2xl font-bold w-full text-center items-center justify-center">Enquire form</h2>
+                </div>
+                <div class="flex w-full">
+                    <form id="form" class="flex flex-col gap-4 w-full">
+
+                        <fieldset
+                            class="flex pl-3 w-full transition-all group hover:shadow-sm hover:border-yellow-300 flex-col relative border rounded-md">
+                            <legend class="text-gray-700 flex text-sm">Full Name</legend>
+                            <input type="text" name="fullname" id="fullname"
+                                class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
+                                placeholder="Enter Your Full Name">
+                            <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                id="fullnameError"></span>
+                        </fieldset>
+
+                        <fieldset
+                            class="flex pl-3 w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            <legend class="text-gray-700 flex text-sm">Email</legend>
+                            <input type="email" name="email" id="email"
+                                class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
+                                placeholder="Enter Your Email">
+                            <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                id="emailError"></span>
+                        </fieldset>
+
+                        <fieldset
+                            class="flex pl-3 w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            <legend class="text-gray-700 flex text-sm">Mobile Number</legend>
+                            <input type="number" name="number" id="number"
+                                class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
+                                placeholder="Enter Your Mobile Number">
+                            <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                id="numberError"></span>
+                        </fieldset>
+
+                        <fieldset
+                            class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            <legend class="text-gray-700 flex text-sm">Select State</legend>
+                            <select id="state" name="state"
+                                class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none">
+                                <option value="" disabled selected>Select State</option>
+                            </select>
+                            <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                id="stateError"></span>
+                        </fieldset>
+
+                        <fieldset
+                            class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            <legend class="text-gray-700 flex text-sm">Select City</legend>
+                            <select id="city" name="city"
+                                class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none">
+                                <option value="" disabled selected>Select City</option>
+                            </select>
+                            <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                id="cityError"></span>
+                        </fieldset>
+
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <fieldset
+                                class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                                <legend class="text-gray-700 flex text-sm">Captcha</legend>
+                                <input type="text" id="captcha" name="captcha"
+                                    class="flex h-4/5 my-auto w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
+                                    placeholder="Captcha">
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="captchaError"></span>
+                            </fieldset>
+                            <div class="flex w-full items-center justify-center">
+                                <img id="captchaImage" alt="CAPTCHA Image"
+                                    class="flex h-10 object-contain w-fit rounded-md invert">
+                                <button type="button" id="refreshCaptchaBtn"
+                                    class="flex h-10 w-10 my-auto rounded-md bg-white items-center justify-center text-yellow-400 font-extrabold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                        class="w-8 h-8">
+                                        <path fill-rule="evenodd"
+                                            d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="flex w-full mt-2">
+                            <button type="submit"
+                                class="bg-brand-red w-full flex text-center items-center justify-center text-white py-3 text-base rounded-md">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- <script src="captcha.js"></script> -->
+    <script src="main.js"></script>
+    <script src="state.js"></script>
+
+
+</body>
+
+</html>
