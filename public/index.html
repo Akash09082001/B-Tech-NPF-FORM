@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 </head>
 
@@ -25,7 +24,7 @@
                     <form id="form" class="flex flex-col gap-4 w-full">
 
                         <fieldset
-                            class="flex pl-3 w-full transition-all group hover:shadow-sm hover:border-yellow-300 flex-col relative border rounded-md">
+                            class="flex pl-3 w-full transition-all group hover:shadow-sm hover:border-yellow-500 flex-col relative border rounded-md">
                             <legend class="text-gray-700 flex text-sm">Full Name</legend>
                             <input type="text" name="fullname" id="fullname"
                                 class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
@@ -35,7 +34,7 @@
                         </fieldset>
 
                         <fieldset
-                            class="flex pl-3 w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            class="flex pl-3 w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
                             <legend class="text-gray-700 flex text-sm">Email</legend>
                             <input type="email" name="email" id="email"
                                 class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
@@ -45,7 +44,7 @@
                         </fieldset>
 
                         <fieldset
-                            class="flex pl-3 w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            class="flex pl-3 w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
                             <legend class="text-gray-700 flex text-sm">Mobile Number</legend>
                             <input type="number" name="number" id="number"
                                 class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
@@ -55,7 +54,7 @@
                         </fieldset>
 
                         <fieldset
-                            class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
                             <legend class="text-gray-700 flex text-sm">Select State</legend>
                             <select id="state" name="state"
                                 class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none">
@@ -66,7 +65,7 @@
                         </fieldset>
 
                         <fieldset
-                            class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                            class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
                             <legend class="text-gray-700 flex text-sm">Select City</legend>
                             <select id="city" name="city"
                                 class="flex w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none">
@@ -78,11 +77,11 @@
 
                         <div class="grid grid-cols-2 gap-2 w-full">
                             <fieldset
-                                class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-300 border rounded-md">
+                                class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
                                 <legend class="text-gray-700 flex text-sm">Captcha</legend>
                                 <input type="text" id="captcha" name="captcha"
                                     class="flex h-4/5 my-auto w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
-                                    placeholder="Captcha">
+                                    placeholder="Enter Captcha">
                                 <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                     id="captchaError"></span>
                             </fieldset>
@@ -108,15 +107,26 @@
                         </div>
                     </form>
                 </div>
+            </div>
 
-
+            <div id="formModal"
+                class="hidden justify-center  h-full w-full absolute top-0 left-0 right-0 backdrop-blur-sm bg-black bg-opacity-30">
+                <div id="formMessageCard"
+                    class="flex absolute top-20 items-center w-full max-w-lg bg-white p-5 gap-5 rounded-md h-fit shadow-xl mx-auto">
+                    <span class="flex w-fit mx-auto text-xl font-semibold">Thank You For Enquire</span>
+                    <span class="flex w-fit mx-auto text-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="h-10 w-10">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                    </span>
+                </div>
             </div>
 
         </div>
     </section>
 
-
-    <!-- <script src="captcha.js"></script> -->
     <script src="main.js"></script>
     <script src="state.js"></script>
 

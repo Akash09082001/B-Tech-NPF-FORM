@@ -17,9 +17,13 @@ var cityError = document.getElementById("cityError");
 var captchaError = document.getElementById("captchaError");
 
 
+// form modal
+const formModal = document.getElementById("formModal");
+const formMessageCard = document.getElementById("formMessageCard");
 
 
 form.addEventListener("submit", (event) => {
+
     event.preventDefault();
 
     fullNameError.textContent = "";
@@ -28,120 +32,132 @@ form.addEventListener("submit", (event) => {
     stateError.textContent = "";
     cityError.textContent = "";
 
-    checkFormInputFields();
+    const isFormValid = checkFormInputFields();
+
+    if (isFormValid) {
+
+        var formData = new FormData();
+
+        formData.append("name", fullName.value.trim())
+        formData.append("email", email.value.trim())
+        formData.append("number", number.value.trim())
+        formData.append("state", state.value)
+        formData.append("city", city.value)
+        formData.append("url", url)
+
+        const formDataJsonString = JSON.stringify(Object.fromEntries(formData.entries()));
+
+        // // Save the JSON string to localStorage
+        // localStorage.setItem('formData', formDataJsonString);
 
 
+        // api code
 
-    var formData = new FormData();
+        var apiUrl = "https://service.letsupgrade.in/v2/itm/isu/leads";
 
-    formData.append("name", fullName.value.trim())
-    formData.append("email", email.value.trim())
-    formData.append("number", number.value.trim())
-    formData.append("state", state.value)
-    formData.append("city", city.value)
-    formData.append("url", url)
-
-    const formDataJsonString = JSON.stringify(Object.fromEntries(formData.entries()));
-
-    // Save the JSON string to localStorage
-    localStorage.setItem('formData', formDataJsonString);
-
-    // api code
-
-    // var apiUrl = "";
-
-    // fetch(apiUrl, {
-    //     method: "POST",
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         "name": fullname.value.trim(),
-    //         "email": email.value.trim(),
-    //         "number": number.value.trim(),
-    //         "state": state.value.trim(),
-    //         "city": city.value.trim(),
-    //         "url": url
-    //     })
-    // })
-    //     .then(res => {
-    //         if (!res.ok) {
-    //             throw new Error(`HTTP error! Status: ${res.status}`);
-    //         }
-    //         return res.json();
-    //     })
-    //     .then(function (response) {
-    //         console.log(response);
-    //         alert("Form submitted successfully!");
-    //         form.reset();
-    //     })
-    //     .catch(error => {
-    //         console.error("Error:", error);
-    //         alert("Form submission failed. Please try again.");
-    //     });
+        fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "name": fullname.value.trim(),
+                "email": email.value.trim(),
+                "number": number.value.trim(),
+                "state": state.value.trim(),
+                "city": city.value.trim(),
+                "url": url
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(function (response) {
+                console.log(response);
+                formPopup();
+                form.reset();
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Form submission failed. Please try again.");
+            });
+    }
 
 });
 
-function checkFormInputFields() {
-    if (fullName.value.trim() === "") {
-        fullNameError.textContent = "Full Name is Required";
-        return;
-    }
-    else {
-        fullNameError.textContent = "";
-    }
+function formPopup() {
+    formModal.style.display = "flex";
 
-    if (email.value.trim() === "") {
-        emailError.textContent = "Email is Required";
-        return
-    } else if (!isValidEmail(email.value.trim())) {
-        emailError.textContent = "Invalid ! Enter proper email id";
-        return;
-    } else {
-        emailError.textContent = "";
-    }
+    setTimeout(() => {
+        formModal.style.display = 'none';
+    }, 3000)
 
-    if (number.value.trim() === "") {
-        numberError.textContent = "Number is Required";
-        return;
-    }
-    else if (!isValidPhoneNumber(number.value.trim())) {
-        numberError.textContent = "Invalid ! Enter 10 Digit Mobile Number";
-        return;
-    }
-    else {
-        numberError.textContent = "";
-    }
-
-    if (state.value.trim() === "") {
-        stateError.textContent = "State is Required";
-        return;
-    }
-    else {
-        stateError.textContent = "";
-    }
-
-    if (city.value.trim() === "") {
-        cityError.textContent = "City is Required";
-        return;
-    }
-    else {
-        cityError.textContent = "";
-    }
-
-    if (captcha.value.trim() === "") {
-        captchaError.textContent = "Captcha is Required";
-        return;
-    }
-    else if (!validateCaptcha(captcha.value.trim())) {
-        captchaError.textContent = "Invalid ! Captcha";
-        return;
-    }
-    else {
-        captchaError.textContent = "";
-    }
 }
+
+function checkFormInputFields() {
+    // Function to check if a field is empty
+    const checkEmptyField = (value, errorElement, errorMessage) => {
+        if (value.trim() === "") {
+            errorElement.textContent = errorMessage;
+            return false;
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    };
+
+    // Function to check email validity
+    const checkEmailValidity = (emailValue, errorElement, errorMessage) => {
+        if (!isValidEmail(emailValue.trim())) {
+            errorElement.textContent = errorMessage;
+            return false;
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    };
+
+    // Function to check phone number validity
+    const checkPhoneNumberValidity = (numberValue, errorElement, errorMessage) => {
+        if (!isValidPhoneNumber(numberValue.trim())) {
+            errorElement.textContent = errorMessage;
+            return false;
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    };
+
+    // Function to check captcha validity
+    const checkCaptchaValidity = (captchaValue, errorElement, errorMessage) => {
+        if (!validateCaptcha(captchaValue.trim())) {
+            errorElement.textContent = errorMessage;
+            return false;
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    };
+
+    // Check each form field
+    const isFullNameValid = checkEmptyField(fullName.value, fullNameError, "Full Name is Required");
+    const isEmailValid = checkEmptyField(email.value, emailError, "Email is Required") &&
+        checkEmailValidity(email.value, emailError, "Invalid! Enter a proper email id");
+    const isNumberValid = checkEmptyField(number.value, numberError, "Number is Required") &&
+        checkPhoneNumberValidity(number.value, numberError, "Invalid! Enter a 10-digit Mobile Number");
+    const isStateValid = checkEmptyField(state.value, stateError, "State is Required");
+    const isCityValid = checkEmptyField(city.value, cityError, "City is Required");
+    const isCaptchaValid = checkEmptyField(captcha.value, captchaError, "Captcha is Required") &&
+        checkCaptchaValidity(captcha.value, captchaError, "Invalid! Captcha");
+
+    // Return true if all fields are valid, otherwise false
+    return isFullNameValid && isEmailValid && isNumberValid && isStateValid && isCityValid && isCaptchaValid;
+}
+
 
 function isValidEmail(email) {
     // Basic email validation using regular expression
