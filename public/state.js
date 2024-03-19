@@ -37,7 +37,7 @@ const stateArray = [
     "Uttarakhand",
     "West Bengal"
 ]
-const cityArray =[
+const cityArray = [
     ,
     "6 Amp",
     "A K Pora",
@@ -8193,20 +8193,31 @@ const cityArray =[
     "shilowri"
 ]
 
-// Populate State Dropdown
-const stateDropdown = document.getElementById("state");
+
+const stateSelect = document.getElementById("state");
 stateArray.forEach(state => {
     const option = document.createElement("option");
     option.text = state;
     option.value = state;
-    stateDropdown.add(option);
+    stateSelect.add(option);
 });
 
-// Populate City Dropdown with all cities
-const cityDropdown = document.getElementById("city");
-cityArray.forEach(city => {
-    const option = document.createElement("option");
-    option.text = city;
-    option.value = city;
-    cityDropdown.add(option);
-});
+function populateCities() {
+    const stateSelect = document.getElementById("stateSelect");
+    const citySelect = document.getElementById("citySelect");
+    const selectedState = stateSelect.value;
+
+    // Clear previous options
+    citySelect.innerHTML = '<option value="">Select City</option>';
+
+    // Populate cities based on selected state
+    if (selectedState) {
+        const citiesForState = cities[selectedState];
+        citiesForState.forEach(city => {
+            const option = document.createElement("option");
+            option.text = city;
+            option.value = city;
+            citySelect.add(option);
+        });
+    }
+}

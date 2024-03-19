@@ -77,7 +77,7 @@ form.addEventListener("submit", (event) => {
                 return res.json();
             })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 formPopup();
                 form.reset();
             })
