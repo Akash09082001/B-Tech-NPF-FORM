@@ -28,8 +28,8 @@ module.exports = {
     },
     colors: {
       "brand-red": "#A91D54",
-      "brand-yellow" : "#FED800",
-      "brand-lisa" : "#9333EA",
+      "brand-yellow": "#FED800",
+      "brand-lisa": "#9333EA",
       transparent: "transparent",
       current: "currentColor",
       black: colors.black,
@@ -54,7 +54,7 @@ module.exports = {
       rose: colors.rose,
     },
     extend: {
-      
+
       height: {
         13: "50px",
         200: "200px",

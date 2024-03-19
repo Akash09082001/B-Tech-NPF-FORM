@@ -6,7 +6,7 @@ var number = document.getElementById("number");
 var state = document.getElementById("state");
 var city = document.getElementById("city");
 var captcha = document.getElementById("captcha");
-var url = getUrl('Google', 'Instagram', 'Btech2024');
+var url = getUrl();
 
 // error id's
 var fullNameError = document.getElementById("fullnameError");
@@ -203,12 +203,9 @@ document.getElementById("refreshCaptchaBtn").addEventListener("click", function 
 });
 insertCaptcha();
 
-function getUrl(utmSource, utmMedium, utmCampaign) {
-    var currentURL = window.location.href;
-    var separator = currentURL.includes('?') ? '&' : '?';
-    var utmParameters = `utm_source=${utmSource}&utm_medium=${utmMedium}&utm_campaign=${utmCampaign}`;
-    var updatedURL = currentURL + `${separator}${utmParameters}`;
-    return updatedURL;
+function getUrl() {
+    return window.location.href;
+
 }
 
 
