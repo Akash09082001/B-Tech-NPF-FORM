@@ -6,6 +6,7 @@ var number = document.getElementById("number");
 var state = document.getElementById("state");
 var city = document.getElementById("city");
 var captcha = document.getElementById("captcha");
+var term = document.getElementById("term");
 var url = getUrl();
 
 // error id's
@@ -15,6 +16,7 @@ var numberError = document.getElementById("numberError");
 var stateError = document.getElementById("stateError");
 var cityError = document.getElementById("cityError");
 var captchaError = document.getElementById("captchaError");
+var termError = document.getElementById("termError");
 
 
 // form modal
@@ -143,6 +145,18 @@ function checkFormInputFields() {
         }
     };
 
+    // Function to check ter, validity
+    const checkTermValidity = (termValue, errorElement, errorMessage) => {
+        if (!term.checked) {
+            termError.textContent = errorMessage;
+            return; // Exit the function
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    };
+
+
     // Check each form field
     const isFullNameValid = checkEmptyField(fullName.value, fullNameError, "Full Name is Required");
     const isEmailValid = checkEmptyField(email.value, emailError, "Email is Required") &&
@@ -153,9 +167,10 @@ function checkFormInputFields() {
     const isCityValid = checkEmptyField(city.value, cityError, "City is Required");
     const isCaptchaValid = checkEmptyField(captcha.value, captchaError, "Captcha is Required") &&
         checkCaptchaValidity(captcha.value, captchaError, "Invalid! Captcha");
+    const isTermValid = checkTermValidity(term.value, termError, "Term & Condition need to Checked Required");
 
     // Return true if all fields are valid, otherwise false
-    return isFullNameValid && isEmailValid && isNumberValid && isStateValid && isCityValid && isCaptchaValid;
+    return isFullNameValid && isEmailValid && isNumberValid && isStateValid && isCityValid && isCaptchaValid && isTermValid;
 }
 
 
