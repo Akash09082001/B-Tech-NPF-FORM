@@ -53,29 +53,32 @@
                                 id="numberError"></span>
                         </fieldset>
 
-                        <fieldset
-                            class="flex relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                            <legend class="ml-3 text-gray-700 flex text-sm w-fit">Select State</legend>
-                            <select id="state" name="state"
-                                class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
-                                <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
-                                    Select State</option>
-                            </select>
-                            <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
-                                id="stateError"></span>
-                        </fieldset>
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <fieldset
+                                class="flex relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">Select State</legend>
+                                <select id="state" name="state"
+                                    class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
+                                    <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
+                                        Select State</option>
+                                </select>
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="stateError"></span>
+                            </fieldset>
 
-                        <fieldset
-                            class="flex relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                            <legend class="ml-3 text-gray-700 flex text-sm w-fit">Select City</legend>
-                            <select id="city" name="city"
-                                class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
-                                <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
-                                    Select City</option>
-                            </select>
-                            <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
-                                id="cityError"></span>
-                        </fieldset>
+                            <fieldset
+                                class="flex relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">Select City</legend>
+                                <select id="city" name="city"
+                                    class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
+                                    <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
+                                        Select City</option>
+                                </select>
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="cityError"></span>
+                            </fieldset>
+                        </div>
+
 
                         <div class="grid grid-cols-2 gap-2 w-full">
                             <fieldset
@@ -104,10 +107,12 @@
                         </div>
 
                         <div class="flex w-full relative">
-                            <label for="term" class="flex w-full gap-2 items-center justify-start">
-                                <input type="checkbox" checked name="term" id="term"
-                                    class="flex w-4 h-4 border rounded-md">
-                                <span>All T & C Apply</span>
+                            <label for="term" class="w-full gap-2 items-center justify-start">
+                                <input type="checkbox" checked name="term" id="term" class="w-4 h-4 border rounded-md">
+                                <span class="w-fit"> &nbsp; I agree to receive information regarding my submitted
+                                    enquiry on ITM
+                                    Skills
+                                    University</span>
                             </label>
                             <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                 id="termError"></span>
@@ -139,7 +144,8 @@
     </section>
 
     <script src="main.js"></script>
-    <script src="data.js"></script>
+    <!-- <script src="data.js"></script> -->
+    <script src="state.js"></script>
 
 
 </body>

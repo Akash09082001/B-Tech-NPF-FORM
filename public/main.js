@@ -42,51 +42,50 @@ form.addEventListener("submit", (event) => {
 
         formData.append("name", fullName.value.trim())
         formData.append("email", email.value.trim())
-        formData.append("number", number.value.trim())
+        formData.append("number", number.value)
         formData.append("state", state.value)
         formData.append("city", city.value)
         formData.append("url", url)
 
         const formDataJsonString = JSON.stringify(Object.fromEntries(formData.entries()));
 
-        // // Save the JSON string to localStorage
-        // localStorage.setItem('formData', formDataJsonString);
+        localStorage.setItem('formData', formDataJsonString);
 
 
-        // api code
+        // // api code
 
-        var apiUrl = "https://service.letsupgrade.in/v2/itm/isu/leads";
+        // var apiUrl = "https://service.letsupgrade.in/v2/itm/isu/leads";
 
-        fetch(apiUrl, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "name": fullname.value.trim(),
-                "email": email.value.trim(),
-                "number": number.value.trim(),
-                "state": state.value.trim(),
-                "city": city.value.trim(),
-                "url": url
-            })
-        })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(function (response) {
-                // console.log(response);
-                form.reset();
-                window.location.href = "https://www.itm.edu/thankyou/itm-skills-university-b.tech-cse-thank-you-page"
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                formPopup();
-            });
+        // fetch(apiUrl, {
+        //     method: "POST",
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         "name": fullName.value.trim(),
+        //         "email": email.value.trim(),
+        //         "number": number.value,
+        //         "state": state.value,
+        //         "city": city.value,
+        //         "url": url
+        //     })
+        // })
+        //     .then(res => {
+        //         if (!res.ok) {
+        //             throw new Error(`HTTP error! Status: ${res.status}`);
+        //         }
+        //         return res.json();
+        //     })
+        //     .then(function (response) {
+        //         console.log(response);
+        //         form.reset();
+        //         window.location.href = "https://www.itm.edu/thankyou/itm-skills-university-b.tech-cse-thank-you-page"
+        //     })
+        //     .catch(error => {
+        //         console.error("Error:", error);
+        //         formPopup();
+        //     });
     }
 
 });
@@ -104,6 +103,16 @@ function checkFormInputFields() {
     // Function to check if a field is empty
     const checkEmptyField = (value, errorElement, errorMessage) => {
         if (value.trim() === "") {
+            errorElement.textContent = errorMessage;
+            return false;
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    };
+
+    const checkFullNameValidity = (fullnameValue, errorElement, errorMessage) => {
+        if (!isValidFullName(fullnameValue.trim())) {
             errorElement.textContent = errorMessage;
             return false;
         } else {
@@ -158,7 +167,8 @@ function checkFormInputFields() {
 
 
     // Check each form field
-    const isFullNameValid = checkEmptyField(fullName.value, fullNameError, "Full Name is Required");
+    const isFullNameValid = checkEmptyField(fullName.value, fullNameError, "Full Name is Required") &&
+        checkFullNameValidity(fullName.value, fullNameError, "Name Cannot be number, Enter a Valid Name");
     const isEmailValid = checkEmptyField(email.value, emailError, "Email is Required") &&
         checkEmailValidity(email.value, emailError, "Invalid! Enter a proper email id");
     const isNumberValid = checkEmptyField(number.value, numberError, "Number is Required") &&
@@ -173,6 +183,14 @@ function checkFormInputFields() {
     return isFullNameValid && isEmailValid && isNumberValid && isStateValid && isCityValid && isCaptchaValid && isTermValid;
 }
 
+function isValidFullName(name) {
+    const digitRegex = /\d/;
+
+    if (digitRegex.test(name)) {
+        return false;
+    }
+    return true;
+}
 
 function isValidEmail(email) {
     // Basic email validation using regular expression
@@ -200,7 +218,7 @@ function generateCaptcha() {
 function insertCaptcha() {
     const captchaContainer = document.getElementById("captchaImage");
     const captcha = generateCaptcha();
-    captchaContainer.src = `https://dummyimage.com/120x40/000/fff?text=${captcha}`;
+    captchaContainer.src = `https://dummyimage.com/120x40/fff/000?text=${captcha}`;
     captchaContainer.alt = "CAPTCHA Image";
     document.getElementById("captcha").value = "";
     document.getElementById("captcha").focus();
@@ -219,7 +237,9 @@ document.getElementById("refreshCaptchaBtn").addEventListener("click", function 
 insertCaptcha();
 
 function getUrl() {
-    return window.location.href;
+    let url = window.location.href;
+    let urlParams = window.location.search;
+    return url + urlParams;
 
 }
 
