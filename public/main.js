@@ -52,40 +52,40 @@ form.addEventListener("submit", (event) => {
         localStorage.setItem('formData', formDataJsonString);
 
 
-        // // api code
+        // api code
 
-        // var apiUrl = "https://service.letsupgrade.in/v2/itm/isu/leads";
+        var apiUrl = "https://service.letsupgrade.in/v2/itm/isu/leads";
 
-        // fetch(apiUrl, {
-        //     method: "POST",
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         "name": fullName.value.trim(),
-        //         "email": email.value.trim(),
-        //         "number": number.value,
-        //         "state": state.value,
-        //         "city": city.value,
-        //         "url": url
-        //     })
-        // })
-        //     .then(res => {
-        //         if (!res.ok) {
-        //             throw new Error(`HTTP error! Status: ${res.status}`);
-        //         }
-        //         return res.json();
-        //     })
-        //     .then(function (response) {
-        //         console.log(response);
-        //         form.reset();
-        //         window.location.href = "https://www.itm.edu/thankyou/itm-skills-university-b.tech-cse-thank-you-page"
-        //     })
-        //     .catch(error => {
-        //         console.error("Error:", error);
-        //         formPopup();
-        //     });
+        fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "name": fullName.value.trim(),
+                "email": email.value.trim(),
+                "number": number.value,
+                "state": state.value,
+                "city": city.value,
+                "url": url
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(function (response) {
+                console.log(response);
+                form.reset();
+                // window.location.href = "https://www.itm.edu/thankyou/itm-skills-university-b.tech-cse-thank-you-page"
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                formPopup();
+            });
     }
 
 });

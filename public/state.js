@@ -1,74 +1,115 @@
-var config = {
-    cUrl: 'https://api.countrystatecity.in/v1',
-    cKey: 'TFEyUmo3ZXlOd3dNa0FUeTZrTEFqdU1oYWdUU2J1cEtGRXp3OHNIbA=='
-};
+document.addEventListener('DOMContentLoaded', function () {
+    const stateSearchInput = document.getElementById("state");
+    const citySearchInput = document.getElementById("city");
+    const stateResults = document.getElementById("stateResults");
+    const cityResults = document.getElementById("cityResults");
 
-var state = document.getElementById("state"),
-    city = document.getElementById("city");
+    // Initially hide the state and city results
+    stateResults.style.display = 'none';
+    stateResults.style.visibility = 'hidden';
+    cityResults.style.display = 'none';
+    cityResults.style.visibility = 'hidden';
 
-const selectedCountry = () => {
-    return new Promise((resolve, reject) => {
-        fetch(config.cUrl + '/countries', { headers: { "X-CSCAPI-KEY": config.cKey } })
-            .then(response => response.json())
-            .then(data => {
-                const india = data.find(country => country.name === "India");
-                if (india) {
-                    const selectedCountryISO2 = india.iso2;
-                    resolve(selectedCountryISO2);
-                } else {
-                    console.log("India not found in the response.");
-                    reject("India not found in the response.");
+    // Placeholder for states and cities data
+    let statesData = [];
+
+    // Function to load states from JSON file
+    async function loadStates() {
+        try {
+            const response = await fetch('data.json');
+            statesData = await response.json();
+        } catch (error) {
+            console.error('Error loading states:', error);
+        }
+    }
+
+    // Function to filter states based on user input
+    function searchStates() {
+        const searchTerm = stateSearchInput.value.toLowerCase();
+        stateResults.innerHTML = ''; // Clear previous results
+        statesData.forEach(state => {
+            if (state.name.toLowerCase().includes(searchTerm)) {
+                const li = document.createElement("li");
+                li.classList.add("search-li");
+                li.textContent = state.name;
+                li.onclick = () => selectState(state);
+                stateResults.appendChild(li);
+            }
+        });
+        // Set display and visibility properties based on search input and focus
+        if (searchTerm !== '' && stateSearchInput === document.activeElement) {
+            stateResults.style.display = 'block';
+            stateResults.style.visibility = 'visible';
+        } else {
+            stateResults.style.display = 'none';
+            stateResults.style.visibility = 'hidden';
+        }
+    }
+
+    // Function to filter cities based on user input and selected state
+    function searchCities(selectedState) {
+        const searchTerm = citySearchInput.value.toLowerCase();
+        cityResults.innerHTML = ''; // Clear previous results
+
+        // Check if selectedState has cities and is an array
+        if (Array.isArray(selectedState.cities)) {
+            selectedState.cities.forEach(cityObj => {
+                const city = cityObj.name.toLowerCase(); // Access city name from nested object
+                if (city.includes(searchTerm)) {
+                    const li = document.createElement("li");
+                    li.classList.add("search-li");
+                    li.textContent = city;
+                    li.onclick = () => selectCity(city);
+                    cityResults.appendChild(li);
                 }
-            })
-            .catch(error => reject(error));
+            });
+        }
+        // Show city results
+        cityResults.style.display = 'block';
+        cityResults.style.visibility = 'visible';
+    }
+
+    // Function to handle selection of state
+    function selectState(selectedState) {
+        stateSearchInput.value = selectedState.name;
+        stateResults.style.display = 'none';
+        stateResults.style.visibility = 'hidden';
+        // Search cities for the selected state
+        searchCities(selectedState);
+    }
+
+    // Function to handle selection of city
+    function selectCity(city) {
+        const capitalizedCity = city.charAt(0).toUpperCase() + city.slice(1);
+        citySearchInput.value = capitalizedCity;
+        cityResults.style.display = 'none';
+        cityResults.style.visibility = 'hidden';
+    }
+
+    // Event listener for input change in state search
+    stateSearchInput.addEventListener("input", searchStates);
+
+    // Event listener for input change in city search
+    citySearchInput.addEventListener("input", function () {
+        const selectedStateName = stateSearchInput.value.toLowerCase();
+        const selectedState = statesData.find(state => state.name.toLowerCase() === selectedStateName);
+        if (selectedState) {
+            searchCities(selectedState);
+        }
     });
-};
 
-const loadStates = () => {
-    selectedCountry()
-        .then(selectedCountryISO2 => {
-            state.innerHTML = '<option value="">Select State</option>';
-            fetch(`${config.cUrl}/countries/${selectedCountryISO2}/states`, { headers: { "X-CSCAPI-KEY": config.cKey } })
-                .then(response => response.json())
-                .then(data => {
-                    // Sort states by name
-                    data.sort((a, b) => a.name.localeCompare(b.name));
-                    data.forEach(stateData => {
-                        const option = document.createElement('option');
-                        option.value = stateData.iso2;
-                        option.textContent = stateData.name;
-                        state.appendChild(option);
-                    });
-                })
-                .catch(error => console.error(error));
-        })
-        .catch(error => console.error(error));
-};
+    // Event listener to hide results when clicking outside the search inputs
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('#state')) {
+            stateResults.style.display = 'none';
+            stateResults.style.visibility = 'hidden';
+        }
+        if (!event.target.closest('#city')) {
+            cityResults.style.display = 'none';
+            cityResults.style.visibility = 'hidden';
+        }
+    });
 
-const loadCity = () => {
-    selectedCountry()
-        .then(selectedCountryISO2 => {
-            const selectedStateCode = state.value;
-            city.innerHTML = '<option value="">Select City</option>';
-            fetch(`${config.cUrl}/countries/${selectedCountryISO2}/states/${selectedStateCode}/cities`, { headers: { "X-CSCAPI-KEY": config.cKey } })
-                .then(response => response.json())
-                .then(data => {
-                    // Sort cities by name
-                    data.sort((a, b) => a.name.localeCompare(b.name));
-                    data.forEach(cityData => {
-                        const option = document.createElement('option');
-                        option.value = cityData.name;
-                        option.textContent = cityData.name;
-                        city.appendChild(option);
-                    });
-                })
-                .catch(error => console.error(error));
-        })
-        .catch(error => console.error(error));
-};
-
-// Add event listeners to trigger loading of states and cities
-state.addEventListener('change', loadCity);
-
-// Load states initially
-loadStates();
+    // Initially load states
+    loadStates();
+});

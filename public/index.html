@@ -52,8 +52,40 @@
                             <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                 id="numberError"></span>
                         </fieldset>
-
                         <div class="grid grid-cols-2 gap-2 w-full">
+                            <fieldset
+                                class="flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">State</legend>
+                                <input type="text" name="state" id="state"
+                                    class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
+                                    placeholder="Search State">
+                                <div
+                                    class="flex w-full rounded-md absolute bg-white h-auto z-10 left-0 right-0 max-h-40 shadow-md top-full overflow-y-auto">
+                                    <ul id="stateResults" class="flex flex-col capitalize w-full h-fit">
+                                    </ul>
+                                </div>
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="stateError"></span>
+                            </fieldset>
+
+                            <fieldset
+                                class="flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">City</legend>
+                                <input type="text" name="city" id="city"
+                                    class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
+                                    placeholder="Search City">
+                                <div
+                                    class="flex w-full rounded-md absolute bg-white h-auto z-10 left-0 right-0 max-h-40 shadow-md top-full overflow-y-auto">
+                                    <ul id="cityResults" class="flex flex-col capitalize w-full h-fit">
+                                    </ul>
+                                </div>
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="cityError"></span>
+                            </fieldset>
+
+                        </div>
+
+                        <!-- <div class="grid grid-cols-2 gap-2 w-full">
                             <fieldset
                                 class="flex relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
                                 <legend class="ml-3 text-gray-700 flex text-sm w-fit">Select State</legend>
@@ -77,7 +109,7 @@
                                 <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                     id="cityError"></span>
                             </fieldset>
-                        </div>
+                        </div> -->
 
 
                         <div class="grid grid-cols-2 gap-2 w-full">
@@ -144,7 +176,7 @@
     </section>
 
     <script src="main.js"></script>
-    <!-- <script src="data.js"></script> -->
+    <!-- <script src="data1.js"></script> -->
     <script src="state.js"></script>
 
 

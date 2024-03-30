@@ -2,5 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-select:invalid { color:grey; }
-select:valid { color:black; }
+select:invalid {
+    color: grey;
+}
+
+select:valid {
+    color: black;
+}
+
+.search-li {
+    @apply py-1.5 pl-2 rounded-md cursor-pointer hover:bg-gray-300 border text-sm;
+}
