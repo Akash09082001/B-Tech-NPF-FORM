@@ -80,7 +80,7 @@ form.addEventListener("submit", (event) => {
             .then(function (response) {
                 console.log(response);
                 form.reset();
-                // window.location.href = "https://www.itm.edu/thankyou/itm-skills-university-b.tech-cse-thank-you-page"
+                window.location.href = "https://www.itm.edu/thankyou/itm-skills-university-b.tech-cse-thank-you-page"
             })
             .catch(error => {
                 console.error("Error:", error);
