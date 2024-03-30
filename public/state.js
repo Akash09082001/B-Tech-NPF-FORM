@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         stateResults.style.display = 'none';
         stateResults.style.visibility = 'hidden';
         // Search cities for the selected state
+        citySearchInput.disabled = false;
         searchCities(selectedState);
     }
 
@@ -110,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    citySearchInput.disabled = true;
     // Initially load states
     loadStates();
 });
