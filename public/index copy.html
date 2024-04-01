@@ -23,41 +23,72 @@
                 <div class="flex w-full">
                     <form id="form" class="flex flex-col gap-4 w-full">
 
-                        <div
+                        <fieldset
                             class="flex w-full transition-all group hover:shadow-sm hover:border-yellow-500 flex-col relative border rounded-md">
+                            <legend class="ml-3 text-gray-700 flex text-sm w-fit">Full Name</legend>
                             <input type="text" name="fullname" id="fullname"
                                 class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
-                                placeholder="Enter Your Full Name *">
+                                placeholder="Enter Your Full Name">
                             <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                 id="fullnameError"></span>
-                        </div>
+                        </fieldset>
 
-                        <div
+                        <fieldset
                             class="flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                            <legend class="ml-3 text-gray-700 flex text-sm w-fit">Email</legend>
                             <input type="email" name="email" id="email"
                                 class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
-                                placeholder="Enter Your Email *">
+                                placeholder="Enter Your Email">
                             <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                 id="emailError"></span>
-                        </div>
-                        <div
+                        </fieldset>
+
+                        <fieldset
                             class="flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                            <div class="relative flex w-full rounded-md shadow-sm">
-                                <div class="flex w-16 border items-center">
-                                    <select id="countrySelect" name="country" autocomplete="country"
-                                        class="flex w-full border text-sm h-9 rounded-md outline-none border-none focus:outline-none">
-                                    </select>
-                                </div>
-                                <input type="number" name="phone-number" id="number"
-                                    class="flex w-full border text-sm pl-3 py-2 rounded-md outline-none border-none focus:outline-none"
-                                    placeholder="Enter Your Mobile Number *">
-                            </div>
+                            <legend class="ml-3 text-gray-700 flex text-sm w-fit">Mobile Number</legend>
+                            <input type="number" name="number" id="number"
+                                class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
+                                placeholder="Enter Your Mobile Number">
                             <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                 id="numberError"></span>
-                        </div>
+                        </fieldset>
                         <div class="grid grid-cols-2 gap-2 w-full">
-                            <div
-                                class="location flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                            <fieldset
+                                class="flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">State</legend>
+                                <input type="text" name="state" id="state"
+                                    class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
+                                    placeholder="Search State">
+                                <div
+                                    class="flex w-full rounded-md absolute bg-white h-auto z-10 left-0 right-0 max-h-40 shadow-md top-full overflow-y-auto">
+                                    <ul id="stateResults" class="flex flex-col capitalize w-full h-fit">
+                                    </ul>
+                                </div>
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="stateError"></span>
+                            </fieldset>
+
+                            <fieldset
+                                class="flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">City</legend>
+                                <input type="text" name="city" id="city"
+                                    class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
+                                    placeholder="Search City">
+                                <div
+                                    class="flex w-full rounded-md absolute bg-white h-auto z-10 left-0 right-0 max-h-40 shadow-md top-full overflow-y-auto">
+                                    <ul id="cityResults" class="flex flex-col capitalize w-full h-fit">
+                                    </ul>
+                                </div>
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="cityError"></span>
+                            </fieldset>
+
+                        </div>
+
+                        <!-- <div class="grid grid-cols-2 gap-2 w-full">
+                            <fieldset
+                                class="flex relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">Select State</legend>
                                 <select id="state" name="state"
                                     class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
                                     <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
@@ -65,21 +96,32 @@
                                 </select>
                                 <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                     id="stateError"></span>
-                            </div>
-                            <div
-                                class="location flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                                <select id="city" name="city" disabled
+                            </fieldset>
+
+                            <fieldset
+                                class="flex relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="ml-3 text-gray-700 flex text-sm w-fit">Select City</legend>
+                                <select id="city" name="city"
                                     class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
                                     <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
                                         Select City</option>
                                 </select>
                                 <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
                                     id="cityError"></span>
-                            </div>
+                            </fieldset>
+                        </div> -->
 
-                        </div>
 
                         <div class="grid grid-cols-2 gap-2 w-full">
+                            <fieldset
+                                class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
+                                <legend class="text-gray-700 flex text-sm">Captcha</legend>
+                                <input type="text" id="captcha" name="captcha"
+                                    class="flex h-4/5 my-auto w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
+                                    placeholder="Enter Captcha">
+                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
+                                    id="captchaError"></span>
+                            </fieldset>
                             <div class="flex w-full items-center justify-center">
                                 <img id="captchaImage" alt="CAPTCHA Image"
                                     class="flex h-10 object-contain w-fit rounded-md invert">
@@ -93,14 +135,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div
-                                class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                                <input type="text" id="captcha" name="captcha"
-                                    class="flex h-4/5 my-auto w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
-                                    placeholder="Enter Captcha *">
-                                <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
-                                    id="captchaError"></span>
-                            </div>
+
                         </div>
 
                         <div class="flex w-full relative">

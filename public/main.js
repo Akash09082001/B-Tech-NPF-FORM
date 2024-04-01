@@ -3,10 +3,11 @@ var form = document.getElementById("form");
 var fullName = document.getElementById("fullname");
 var email = document.getElementById("email");
 var number = document.getElementById("number");
-var state = document.getElementById("state");
-var city = document.getElementById("city");
+var state = document?.getElementById("state") || "Andaman and Nicobar";
+var city = document?.getElementById("city") || "Hut Bay";
 var captcha = document.getElementById("captcha");
 var term = document.getElementById("term");
+var countrySelect = document.getElementById("countrySelect");
 var url = getUrl();
 
 // error id's
@@ -45,6 +46,16 @@ form.addEventListener("submit", (event) => {
         formData.append("number", number.value)
         formData.append("state", state.value)
         formData.append("city", city.value)
+        // Check if the country code is +91
+        if (countrySelect.value == "+91") {
+            formData.append("state", state?.value || "Andaman and Nicobar")
+            formData.append("city", city?.value || "Hut Bay")
+        } else {
+            // For other country codes, set state and city as null
+            formData.append("state", "Andaman and Nicobar")
+            formData.append("city", "Hut Bay")
+        }
+
         formData.append("url", url)
 
         const formDataJsonString = JSON.stringify(Object.fromEntries(formData.entries()));
@@ -62,14 +73,7 @@ form.addEventListener("submit", (event) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                "name": fullName.value.trim(),
-                "email": email.value.trim(),
-                "number": number.value,
-                "state": state.value,
-                "city": city.value,
-                "url": url
-            })
+            body: formDataJsonString
         })
             .then(res => {
                 if (!res.ok) {
@@ -180,7 +184,17 @@ function checkFormInputFields() {
     const isTermValid = checkTermValidity(term.value, termError, "Term & Condition need to Checked Required");
 
     // Return true if all fields are valid, otherwise false
-    return isFullNameValid && isEmailValid && isNumberValid && isStateValid && isCityValid && isCaptchaValid && isTermValid;
+    if (countrySelect.value === "+91") {
+        const isStateValid = checkEmptyField(state.value, stateError, "State is Required");
+        const isCityValid = checkEmptyField(city.value, cityError, "City is Required");
+
+        // Return true if all fields are valid, otherwise false
+        return isFullNameValid && isEmailValid && isNumberValid && isStateValid && isCityValid && isCaptchaValid && isTermValid;
+    } else {
+        // For other countries, no validation is required for state and city
+        return isFullNameValid && isEmailValid && isNumberValid && isCaptchaValid && isTermValid;
+    }
+    // return isFullNameValid && isEmailValid && isNumberValid && isStateValid && isCityValid && isCaptchaValid && isTermValid;
 }
 
 function isValidFullName(name) {
