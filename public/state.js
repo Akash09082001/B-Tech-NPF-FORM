@@ -1,32 +1,58 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const stateSearchInput = document.getElementById("state");
-    const citySearchInput = document.getElementById("city");
-    const stateResults = document.getElementById("stateResults");
-    const cityResults = document.getElementById("cityResults");
 
-    // Initially hide the state and city results
+function initializeSearch(stateInputId, cityInputId, stateResultsId, cityResultsId, dataUrl) {
+    const stateSearchInput = document.getElementById(stateInputId);
+    const citySearchInput = document.getElementById(cityInputId);
+    const stateResults = document.getElementById(stateResultsId);
+    const cityResults = document.getElementById(cityResultsId);
+
     stateResults.style.display = 'none';
     stateResults.style.visibility = 'hidden';
     cityResults.style.display = 'none';
     cityResults.style.visibility = 'hidden';
 
-    // Placeholder for states and cities data
     let statesData = [];
 
-    // Function to load states from JSON file
     async function loadStates() {
         try {
-            const response = await fetch('data.json');
+            const response = await fetch(dataUrl);
             statesData = await response.json();
         } catch (error) {
             console.error('Error loading states:', error);
         }
     }
 
-    // Function to filter states based on user input
+    function displayAllStates() {
+        stateResults.innerHTML = '';
+        statesData.forEach(state => {
+            const li = document.createElement("li");
+            li.classList.add("search-li");
+            li.textContent = state.name;
+            li.onclick = () => selectState(state);
+            stateResults.appendChild(li);
+        });
+        stateResults.style.display = 'block';
+        stateResults.style.visibility = 'visible';
+    }
+
+    function displayAllCities(selectedState) {
+        cityResults.innerHTML = '';
+        if (Array.isArray(selectedState.cities)) {
+            selectedState.cities.forEach(cityObj => {
+                const city = cityObj.name.toLowerCase();
+                const li = document.createElement("li");
+                li.classList.add("search-li");
+                li.textContent = city;
+                li.onclick = () => selectCity(city);
+                cityResults.appendChild(li);
+            });
+        }
+        cityResults.style.display = 'block';
+        cityResults.style.visibility = 'visible';
+    }
+
     function searchStates() {
         const searchTerm = stateSearchInput.value.toLowerCase();
-        stateResults.innerHTML = ''; // Clear previous results
+        stateResults.innerHTML = '';
         statesData.forEach(state => {
             if (state.name.toLowerCase().includes(searchTerm)) {
                 const li = document.createElement("li");
@@ -36,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 stateResults.appendChild(li);
             }
         });
-        // Set display and visibility properties based on search input and focus
         if (searchTerm !== '' && stateSearchInput === document.activeElement) {
             stateResults.style.display = 'block';
             stateResults.style.visibility = 'visible';
@@ -46,15 +71,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Function to filter cities based on user input and selected state
     function searchCities(selectedState) {
         const searchTerm = citySearchInput.value.toLowerCase();
-        cityResults.innerHTML = ''; // Clear previous results
+        cityResults.innerHTML = '';
 
-        // Check if selectedState has cities and is an array
         if (Array.isArray(selectedState.cities)) {
             selectedState.cities.forEach(cityObj => {
-                const city = cityObj.name.toLowerCase(); // Access city name from nested object
+                const city = cityObj.name.toLowerCase();
                 if (city.includes(searchTerm)) {
                     const li = document.createElement("li");
                     li.classList.add("search-li");
@@ -64,22 +87,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
-        // Show city results
         cityResults.style.display = 'block';
         cityResults.style.visibility = 'visible';
     }
 
-    // Function to handle selection of state
     function selectState(selectedState) {
         stateSearchInput.value = selectedState.name;
         stateResults.style.display = 'none';
         stateResults.style.visibility = 'hidden';
-        // Search cities for the selected state
         citySearchInput.disabled = false;
-        searchCities(selectedState);
+        displayAllCities(selectedState);
     }
 
-    // Function to handle selection of city
     function selectCity(city) {
         const capitalizedCity = city.charAt(0).toUpperCase() + city.slice(1);
         citySearchInput.value = capitalizedCity;
@@ -87,10 +106,18 @@ document.addEventListener('DOMContentLoaded', function () {
         cityResults.style.visibility = 'hidden';
     }
 
-    // Event listener for input change in state search
     stateSearchInput.addEventListener("input", searchStates);
 
-    // Event listener for input change in city search
+    stateSearchInput.addEventListener("focus", displayAllStates);
+
+    citySearchInput.addEventListener("focus", function () {
+        const selectedStateName = stateSearchInput.value.toLowerCase();
+        const selectedState = statesData.find(state => state.name.toLowerCase() === selectedStateName);
+        if (selectedState) {
+            displayAllCities(selectedState);
+        }
+    });
+
     citySearchInput.addEventListener("input", function () {
         const selectedStateName = stateSearchInput.value.toLowerCase();
         const selectedState = statesData.find(state => state.name.toLowerCase() === selectedStateName);
@@ -99,19 +126,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Event listener to hide results when clicking outside the search inputs
     document.addEventListener('click', function (event) {
-        if (!event.target.closest('#state')) {
+        if (!event.target.closest('#' + stateInputId)) {
             stateResults.style.display = 'none';
             stateResults.style.visibility = 'hidden';
         }
-        if (!event.target.closest('#city')) {
+        if (!event.target.closest('#' + cityInputId)) {
             cityResults.style.display = 'none';
             cityResults.style.visibility = 'hidden';
         }
     });
 
     citySearchInput.disabled = true;
-    // Initially load states
     loadStates();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    initializeSearch("state", "city", "stateResults", "cityResults", "data.json");
 });
