@@ -10,6 +10,11 @@ var term = document.getElementById("term");
 var countrySelect = document.getElementById("countrySelect");
 var url = getUrl();
 
+var mobile = () => {
+    return countrySelect.value + " " + number.value;
+};
+
+
 // error id's
 var fullNameError = document.getElementById("fullnameError");
 var emailError = document.getElementById("emailError");
@@ -43,7 +48,7 @@ form.addEventListener("submit", (event) => {
 
         formData.append("name", fullName.value.trim())
         formData.append("email", email.value.trim())
-        formData.append("number", number.value)
+        formData.append("number", mobile())
         formData.append("state", state.value)
         formData.append("city", city.value)
         // Check if the country code is +91
