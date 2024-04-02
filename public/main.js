@@ -186,7 +186,7 @@ function checkFormInputFields() {
     const isCityValid = checkEmptyField(city.value, cityError, "City is Required");
     const isCaptchaValid = checkEmptyField(captcha.value, captchaError, "Captcha is Required") &&
         checkCaptchaValidity(captcha.value, captchaError, "Invalid! Captcha");
-    const isTermValid = checkTermValidity(term.value, termError, "Term & Condition need to Checked Required");
+    const isTermValid = checkTermValidity(term.value, termError, "Please Check the Agreement Checkbox to proceed further!");
 
     // Return true if all fields are valid, otherwise false
     if (countrySelect.value === "+91") {
