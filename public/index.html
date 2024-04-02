@@ -21,11 +21,11 @@
                     <h2 class="flex text-2xl font-bold w-full text-center items-center justify-center">Enquire form</h2>
                 </div>
                 <div class="flex w-full">
-                    <form id="form" class="flex flex-col gap-4 w-full">
+                    <form id="form" autocomplete="off" class="flex flex-col gap-4 w-full">
 
                         <div
                             class="flex w-full transition-all group hover:shadow-sm hover:border-yellow-500 flex-col relative border rounded-md">
-                            <input type="text" name="fullname" id="fullname"
+                            <input type="text" name="fullname" id="fullname" autocomplete="false"
                                 class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
                                 placeholder="Enter Your Full Name *">
                             <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
@@ -34,7 +34,7 @@
 
                         <div
                             class="flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                            <input type="email" name="email" id="email"
+                            <input type="email" name="email" id="email" autocomplete="false"
                                 class="flex w-full border text-sm px-3 py-2 rounded-md outline-none border-none focus:outline-none"
                                 placeholder="Enter Your Email *">
                             <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
@@ -48,7 +48,7 @@
                                         class="flex w-full border text-sm h-9 rounded-md outline-none border-none focus:outline-none">
                                     </select>
                                 </div>
-                                <input type="number" name="phone-number" id="number"
+                                <input type="number" name="phone-number" id="number" autocomplete="false"
                                     class="flex w-full border text-sm pl-3 py-2 rounded-md outline-none border-none focus:outline-none"
                                     placeholder="Enter Your Mobile Number *">
                             </div>
@@ -58,7 +58,7 @@
                         <div class="grid grid-cols-2 gap-2 w-full">
                             <div
                                 class="location flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                                <select id="state" name="state"
+                                <select id="state" name="state" disabled autocomplete="none"
                                     class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
                                     <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
                                         Select State</option>
@@ -68,7 +68,7 @@
                             </div>
                             <div
                                 class="location flex w-full flex-col relative transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                                <select id="city" name="city" disabled
+                                <select id="city" name="city" disabled autocomplete="none"
                                     class="flex w-full border text-sm h-9 px-3 rounded-md outline-none border-none focus:outline-none">
                                     <option value="" class="flex w-full h-full text-sm py-2 " disabled selected>
                                         Select City</option>
@@ -95,7 +95,7 @@
                             </div>
                             <div
                                 class="flex pl-3 relative w-full transition-all group hover:shadow-sm hover:border-yellow-500 border rounded-md">
-                                <input type="text" id="captcha" name="captcha"
+                                <input type="text" id="captcha" name="captcha" autocomplete="false"
                                     class="flex h-4/5 my-auto w-full border text-sm py-2 rounded-md outline-none border-none focus:outline-none"
                                     placeholder="Enter Captcha *">
                                 <span class="flex absolute -bottom-4 left-0 text-xs text-red-500 pl-3"
